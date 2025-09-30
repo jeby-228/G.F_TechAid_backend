@@ -34,7 +34,11 @@ class Settings(BaseModel):
     
     @property
     def DATABASE_URL(self) -> str:
-        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        # 開發環境使用 SQLite，生產環境使用 PostgreSQL
+        if self.ENVIRONMENT == "development":
+            return "sqlite:///./disaster_relief.db"
+        else:
+            return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
     
     # Redis 設定
     REDIS_HOST: str = os.getenv("REDIS_HOST", "localhost")
@@ -55,6 +59,20 @@ class Settings(BaseModel):
     # 外部服務設定
     GOOGLE_MAPS_API_KEY: Optional[str] = os.getenv("GOOGLE_MAPS_API_KEY")
     LINE_NOTIFY_TOKEN: Optional[str] = os.getenv("LINE_NOTIFY_TOKEN")
+    
+    # Email 設定
+    SMTP_SERVER: Optional[str] = os.getenv("SMTP_SERVER")
+    SMTP_PORT: int = int(os.getenv("SMTP_PORT", "587"))
+    SMTP_USERNAME: Optional[str] = os.getenv("SMTP_USERNAME")
+    SMTP_PASSWORD: Optional[str] = os.getenv("SMTP_PASSWORD")
+    SMTP_FROM_EMAIL: str = os.getenv("SMTP_FROM_EMAIL", "noreply@guangfu-relief.tw")
+    SMTP_USE_TLS: bool = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
+    
+    # 簡訊設定
+    SMS_ENABLED: bool = os.getenv("SMS_ENABLED", "false").lower() == "true"
+    SMS_API_KEY: Optional[str] = os.getenv("SMS_API_KEY")
+    SMS_API_URL: Optional[str] = os.getenv("SMS_API_URL")
+    SMS_SENDER_ID: str = os.getenv("SMS_SENDER_ID", "光復e互助")
     
     # 應用程式設定
     PROJECT_NAME: str = os.getenv("PROJECT_NAME", "光復e互助平台")

@@ -1,42 +1,47 @@
-# 生產環境依賴 - 從 pyproject.toml 生成
-# 使用 pip-tools 管理: pip-compile pyproject.toml
+# Production dependencies - generated from pyproject.toml
+# Managed with pip-tools: pip-compile pyproject.toml
 
-# FastAPI 核心
-fastapi>=0.104.0
-uvicorn[standard]>=0.24.0
+# FastAPI core
+fastapi>=0.103.0
+uvicorn[standard]>=0.23.0
 
-# 資料庫
-sqlalchemy>=2.0.0
-alembic>=1.12.0
+# Database
+sqlalchemy>=1.4.0
+alembic>=1.8.0
 psycopg2-binary>=2.9.0
 
 # Redis
 redis>=5.0.0
 
-# 身分驗證與安全
+# Authentication & Security
 python-jose[cryptography]>=3.3.0
 passlib[bcrypt]>=1.7.4
 python-multipart>=0.0.6
 
-# 資料驗證
+# Data validation
 pydantic>=2.4.0
 pydantic-settings>=2.0.0
 email-validator>=2.1.0
 
-# HTTP 客戶端
+# HTTP clients
 httpx>=0.25.0
 requests>=2.31.0
 
-# 工具庫
+# Utilities
 python-dateutil>=2.8.0
 pytz>=2023.3
 
-# 地理位置處理
+# Geolocation processing
 geopy>=2.4.0
 
-# 檔案處理
+# File processing
 python-magic>=0.4.27
 pillow>=10.0.0
 
-# 環境變數
+# Report generation
+reportlab>=4.0.0
+pandas>=2.1.0
+openpyxl>=3.1.0
+
+# Environment variables
 python-dotenv>=1.0.0

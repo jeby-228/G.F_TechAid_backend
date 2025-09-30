@@ -61,6 +61,11 @@ dependencies = [
     "python-magic>=0.4.27",
     "pillow>=10.0.0",
     
+    # 報表生成
+    "reportlab>=4.0.0",
+    "pandas>=2.1.0",
+    "openpyxl>=3.1.0",
+    
     # 環境變數
     "python-dotenv>=1.0.0",
 ]
@@ -141,3 +146,6 @@ testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
+markers = [
+    "asyncio: marks tests as async (deselect with '-m \"not asyncio\"')",
+]

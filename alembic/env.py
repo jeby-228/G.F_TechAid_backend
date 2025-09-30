@@ -10,6 +10,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from app.core.config import settings
 from app.core.database import Base
+# 匯入所有模型以確保 Alembic 能夠偵測到它們
+import app.models
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
