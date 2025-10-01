@@ -44,7 +44,6 @@ clean:
     rm -rf build/
     rm -rf *.egg-info/
 
-# Docker 相關命令
 [group('Docker')]
 docker-build:
     docker-compose build
