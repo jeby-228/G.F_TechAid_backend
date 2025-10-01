@@ -32,7 +32,7 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=disaster_relief
     ports:
-      - "5432:5432"
+      - "5466:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
