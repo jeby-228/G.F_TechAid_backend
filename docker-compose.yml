@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # FastAPI 應用程式
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_SERVER=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=disaster_relief
+      - REDIS_HOST=redis
+      - ENVIRONMENT=development
+      - DEBUG=true
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./app:/app/app
+      - ./alembic:/app/alembic
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - disaster-relief-network
+
+  # PostgreSQL 資料庫
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=disaster_relief
+    ports:
+      - "5466:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - disaster-relief-network
+
+  # Redis 快取
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - disaster-relief-network
+
+  # pgAdmin (資料庫管理工具)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@disaster-relief.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - disaster-relief-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  disaster-relief-network:
+    driver: bridge
