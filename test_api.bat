@@ -30,3 +30,4 @@ echo 您可以訪問 http://localhost:8000/api/v1/docs 查看完整文件
 echo.
 
 pause
+
