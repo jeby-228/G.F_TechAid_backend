@@ -18,16 +18,17 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # 複製依賴檔案
-COPY requirements.txt .
+COPY requirements.txt requirements-dev.txt ./
 
 # 安裝 Python 依賴
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+    && pip install --no-cache-dir -r requirements-dev.txt
 
 # 複製應用程式碼
 COPY ./app /app/app
 COPY ./alembic /app/alembic
 COPY ./alembic.ini /app/
+COPY ./tests /app/tests
 
 # 建立非 root 使用者
 RUN adduser --disabled-password --gecos '' appuser \
