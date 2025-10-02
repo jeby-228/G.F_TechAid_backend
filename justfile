@@ -20,6 +20,12 @@ dev:
 test:
     pytest -v --cov=app --cov-report=html
 
+# 執行測試
+[group('Docker')]
+[group('test')]
+docker-test:
+    docker-compose run --build --rm api pytest --cov=app --cov-report=html
+
 # 程式碼檢查
 [group('style')]
 lint:
